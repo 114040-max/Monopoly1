@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萬壑松風：大富翁互動遊戲</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#5d4037">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #d2c5ab;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            color: #3e2723;
+        }
+
+        .board-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            width: 90vw;
+            height: 90vw;
+            max-width: 600px;
+            max-height: 600px;
+            margin: 20px auto;
+            border: 8px solid #5d4037;
+            position: relative;
+            background: #f5f5dc;
+        }
+
+        .center-image {
+            grid-column: 2 / 6;
+            grid-row: 2 / 6;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Li_Tang_-_Whispering_Pines_in_the_Mountains.jpg/400px-Li_Tang_-_Whispering_Pines_in_the_Mountains.jpg');
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #8d6e63;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .cell {
+            border: 1px solid #8d6e63;
+            font-size: 10px;
+            padding: 2px;
+            background: #efebe9;
+            text-align: center;
+        }
+
+        .cell-img {
+            width: 100%;
+            height: 60%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .player {
+            width: 24px;
+            height: 24px;
+            background-color: #d32f2f;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 50;
+            border: 2px solid white;
+            transition: all 0.3s;
+        }
+
+        .dice-btn {
+            background: #5d4037;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+        .message-box {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message-box > div {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 300px;
+        }
+    </style>
+</head>
+
+<body class="p-4">
+
+<h1 class="text-2xl font-bold text-center mb-2">萬壑松風圖：傳世名畫大富翁</h1>
+
+<div class="board-container" id="board">
+    <div class="center-image">
+        <div id="dice-result" class="text-3xl mb-2">?</div>
+        <button class="dice-btn" onclick="rollDice()">投擲骰子</button>
+    </div>
+    <div id="player" class="player"></div>
+</div>
+
+<div id="msg" class="message-box">
+    <div>
+        <h2 id="msg-title" class="font-bold mb-2"></h2>
+        <p id="msg-body" class="mb-4"></p>
+        <button onclick="closeMsg()" class="dice-btn">確定</button>
+    </div>
+</div>
+
+<script>
+const cellsData = [
+  "起點","石門深谷","松針細描","機會","飛瀑流泉",
+  "奇石崚嶒","歇腳","遠山霧靄","機會","古徑行旅",
+  "長松傲立","溪水潺潺","進修","懸崖峭壁","墨色乾潤",
+  "機會","幽谷深處","石罅流泉","歇腳","峰巒疊嶂"
+];
+
+const layout = [
+ [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],
+ [1,5],[2,5],[3,5],[4,5],[5,5],
+ [5,4],[5,3],[5,2],[5,1],[5,0],
+ [4,0],[3,0],[2,0],[1,0]
+];
+
+let pos = 0;
+
+const board = document.getElementById("board");
+const player = document.getElementById("player");
+
+cellsData.forEach((name,i)=>{
+  const d=document.createElement("div");
+  d.className="cell";
+  d.style.gridRowStart=layout[i][0]+1;
+  d.style.gridColumnStart=layout[i][1]+1;
+  d.innerText=name;
+  board.appendChild(d);
+});
+
+function updatePlayer(){
+  const cell=board.children[pos+1];
+  player.style.left=cell.offsetLeft+20+"px";
+  player.style.top=cell.offsetTop+20+"px";
+}
+
+updatePlayer();
+
+function rollDice(){
+  const dice=Math.floor(Math.random()*6)+1;
+  document.getElementById("dice-result").innerText=dice;
+  pos=(pos+dice)%cellsData.length;
+  updatePlayer();
+  showMsg("停留地點",cellsData[pos]);
+}
+
+function showMsg(t,b){
+  document.getElementById("msg-title").innerText=t;
+  document.getElementById("msg-body").innerText=b;
+  document.getElementById("msg").style.display="flex";
+}
+
+function closeMsg(){
+  document.getElementById("msg").style.display="none";
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html>

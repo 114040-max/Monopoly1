@@ -1,0 +1,9 @@
+{
+  "name": "萬壑松風圖：大富翁",
+  "short_name": "萬壑松風",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#d2c5ab",
+  "theme_color": "#5d4037",
+  "lang": "zh-TW"
+}
