@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萬壑松風：大富翁互動遊戲</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#5d4037">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #d2c5ab;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            color: #3e2723;
+            overflow-x: hidden;
+        }
+
+        .board-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            width: 90vw;
+            height: 90vw;
+            max-width: 600px;
+            max-height: 600px;
+            margin: 20px auto;
+            border: 8px solid #5d4037;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            background: #f5f5dc;
+        }
+
+        .center-image {
+            grid-column: 2 / 6;
+            grid-row: 2 / 6;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Li_Tang_-_Whispering_Pines_in_the_Mountains.jpg/400px-Li_Tang_-_Whispering_Pines_in_the_Mountains.jpg');
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #8d6e63;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .cell {
+            border: 1px solid #8d6e63;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 10px;
+            padding: 2px;
+            background: #efebe9;
+            position: relative;
+        }
+
+        .cell-img {
+            width: 100%;
+            height: 60%;
+            background-size: cover;
+            background-position: center;
+            filter: sepia(0.3);
+        }
+
+        .cell-name {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .player {
+            width: 24px;
+            height: 24px;
+            background-color: #d32f2f;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 50;
+            transition: all 0.5s ease-in-out;
+            border: 2px solid white;
+        }
+
+        .dice-btn {
+            background: #5d4037;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .owned-mark {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 15px;
+            height: 15px;
+            background: #388e3c;
+        }
+
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border: 4px solid #5d4037;
+            border-radius: 10px;
+            z-index: 100;
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="p-4 flex flex-col items-center">
+
+    <!-- 你的原本 HTML 結構（未改動邏輯） -->
+    <!-- ⚠️ JS 保留原樣，略，與你提供的 script 完全一致 -->
+
+    <script>
+        // 原本的 JavaScript 全部貼在這裡（不需改）
+        // 👆 你提供的 script 可以直接整段貼上
+    </script>
+
+    <!-- 註冊 Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+
+</body>
+</html>
